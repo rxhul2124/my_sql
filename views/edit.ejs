@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Username</title>
+</head>
+<body>
+    <form method="POST" action="/fetch/<%= result[0].id %>?_method=PATCH">
+        <h2>You are editing the username of: <%= result[0].email %> </h2>
+        <input type="text" name="username" placeholder="<%= result[0].username %>">
+        <input type="password" name="password" placeholder="password">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
