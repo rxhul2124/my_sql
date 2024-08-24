@@ -30,6 +30,7 @@
             <th>USERNAME</th>
             <th>EMAIL</th>
             <th>EDIT</th>
+            <th>DELETE</th>
         </tr>
         <% users.forEach(function(user) { %> 
             <tr>
@@ -39,6 +40,11 @@
                 <td>
                     <form method="get" action="/fetch/<%=user.id%>/edit">
                         <button>Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="get" action="/fetch/<%=user.id%>/delete">
+                        <button>DELETE</button>
                     </form>
                 </td>
             </tr>

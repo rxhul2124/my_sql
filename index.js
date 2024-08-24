@@ -78,18 +78,19 @@ app.get("/fetch/:id/edit", (req, res)=>{
 app.patch("/fetch/:id", (req, res)=>{
     let {id} = req.params;
     let { password : formPass, username: newUsername} = req.body;
-    let q = `SELECT * FORM users WHERE id = '${id}'`;
+    let q = `SELECT * FROM users WHERE id ='${id}'`;
     
     try{
         connection.query(q, (err, result)=>{
             if(err) throw err;
+            let user = result[0];
             if(formPass != user.password){
                 res.send("Wrong password");
             }else{
                 let q1 = `UPDATE users SET username='${newUsername}' WHERE id = '${id}'`;
                 connection.query(q1, (err, result)=>{
                     if(err) throw err;
-                    res.send(result);
+                    res.redirect("/fetch");
                 });
             }
         });
@@ -97,6 +98,53 @@ app.patch("/fetch/:id", (req, res)=>{
         console.log(err);
     }
 });
+
+// Delete user route
+
+app.get("/fetch/:id/delete", (req, res)=>{
+    let {id} = req.params;
+    let q = `SELECT * FROM users WHERE id = "${id}"`;
+    try{
+        connection.query(q, (err, result)=>{
+            if(err) throw err;
+            let user = result[0];
+            res.render("delete.ejs",{user});
+        })
+    }catch(err){
+        console.log(err);
+    }
+});
+
+// Delete user patch route
+app.patch("/fetch/:id/update", (req, res) => {
+    let { id } = req.params;
+    let { password: formPass, email: formEmail } = req.body;
+
+    let q = `SELECT * FROM users WHERE id='${id}'`;
+
+    try {
+        connection.query(q, (err, result) => {
+            if (err) throw err;
+            let user = result[0];
+
+            if (formPass === user.password && formEmail === user.email) {
+                let q1 = `DELETE FROM users WHERE id='${user.id}'`;
+
+                connection.query(q1, (err, result) => {
+                    if (err) throw err;
+                    res.redirect("/fetch");
+                });
+            } else if (formPass !== user.password) {
+                res.send("Wrong password!!");
+            } else if (formEmail !== user.email) {
+                res.send("Wrong email!!");
+            }
+        });
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 
 
 // let q  = "INSERT INTO users VALUES ?";

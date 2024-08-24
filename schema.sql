@@ -1,8 +1,10 @@
 
-CREATE TABLE users(
-    id varchar(100)  PRIMARY KEY,
-    username VARCHAR(100)  NOT NULL,
-    email VARCHAR(100) ,
-    password VARCHAR(100) NOT NULL
-);
+-- CREATE TABLE users(
+--     id varchar(100)  PRIMARY KEY,
+--     username VARCHAR(100)  NOT NULL,
+--     email VARCHAR(100) ,
+--     password VARCHAR(100) NOT NULL
+-- );
 
+
+SELECT * FROM users WHERE username = "adsf";
