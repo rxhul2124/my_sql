@@ -168,6 +168,8 @@ app.post("/fetch" , (req , res)=>{
     }
 });
 
+//insert new 100 users to database
+
 // let q  = "INSERT INTO users VALUES ?";
 // let data = [];
 // for(let i=1; i<=100; i++){
