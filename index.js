@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const path = require("path");
 const methodOverride = require("method-override");
+const { v4: uuidv4 } = require('uuid');
 
 
 app.use(methodOverride("_method"));
@@ -146,6 +147,26 @@ app.patch("/fetch/:id/update", (req, res) => {
 });
 
 
+// new user route
+
+app.get("/fetch/newUser", (req, res)=>{
+    res.render("newUser.ejs");
+});
+
+
+app.post("/fetch" , (req , res)=>{
+    let {newEmail : email, newPassword: password, newUsername: username} = req.body;
+    let q = "INSERT INTO users VALUES (?)";
+    let data = [uuidv4(), username, email, password];
+    try{
+        connection.query(q,[data], (err, result)=>{
+            if(err) throw err;
+            res.redirect("/fetch");
+        });
+    }catch(err){
+        console.log(err);
+    }
+});
 
 // let q  = "INSERT INTO users VALUES ?";
 // let data = [];
